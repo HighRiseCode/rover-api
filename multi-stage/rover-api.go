@@ -4,8 +4,8 @@ import (
    "fmt"
    "log"
    "net/http"
-   "io/ioutil"
-   "encoding/json"
+   //"io/ioutil"
+   //"encoding/json"
 )
 
 type NasaViewer struct {
@@ -38,7 +38,7 @@ type NasaViewer struct {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-  response, _ := http.Get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY")
+  /*response, _ := http.Get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY")
   temp, _ := ioutil.ReadAll(response.Body)
 
   var nasaViewer NasaViewer
@@ -47,7 +47,8 @@ func handler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Error during Unmarshal of data")
   }
 
-  fmt.Fprintf(w, "ID: ", nasaViewer.Photos)
+  fmt.Fprintf(w, "ID: ", nasaViewer.Photos)*/
+  fmt.Fprintf(w, "NASA IMAGE HERE")
 }
 
 func main() {
