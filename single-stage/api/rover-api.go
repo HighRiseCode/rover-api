@@ -4,8 +4,9 @@ import (
    "fmt"
    "log"
    "net/http"
-   //"io/ioutil"
-   //"encoding/json"
+   "io/ioutil"
+   "encoding/json"
+   "math/rand"
 )
 
 type NasaViewer struct {
@@ -38,20 +39,19 @@ type NasaViewer struct {
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
-  /*response, _ := http.Get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY")
-  temp, _ := ioutil.ReadAll(response.Body)
+  response, _ := http.Get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=1&api_key=DEMO_KEY")
+  catalog, _ := ioutil.ReadAll(response.Body)
 
   var nasaViewer NasaViewer
-  err := json.Unmarshal(temp, &nasaViewer)
+  err := json.Unmarshal(catalog, &nasaViewer)
   if err != nil {
     fmt.Fprintf(w, "Error during Unmarshal of data")
   }
 
-  fmt.Fprintf(w, "ID: ", nasaViewer.Photos)*/
-  fmt.Fprintf(w, "NASA IMAGE HERE")
+  fmt.Fprintf(w, nasaViewer.Photos[rand.Intn(len(nasaViewer.Photos))].ImgSrc)
 }
 
 func main() {
    http.HandleFunc("/", handler)
-   log.Fatal(http.ListenAndServe(":8080", nil))
+   log.Fatal(http.ListenAndServe(":9001", nil))
 }
