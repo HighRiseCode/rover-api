@@ -7,6 +7,7 @@ import (
    "io/ioutil"
    "encoding/json"
    "math/rand"
+   "strconv"
 )
 
 type NasaViewer struct {
@@ -38,8 +39,17 @@ type NasaViewer struct {
 	} `json:"photos"`
 }
 
+type ColorPayload struct {
+  Id  string
+}
+
+type NasaPayload struct {
+  Img string
+}
+
 func handler(w http.ResponseWriter, r *http.Request) {
-  response, _ := http.Get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=1&api_key=DEMO_KEY")
+  var page = strconv.Itoa(rand.Intn(5))
+  response, _ := http.Get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=" + page + "&api_key=")
   catalog, _ := ioutil.ReadAll(response.Body)
 
   var nasaViewer NasaViewer
@@ -48,10 +58,21 @@ func handler(w http.ResponseWriter, r *http.Request) {
     fmt.Fprintf(w, "Error during Unmarshal of data")
   }
 
-  fmt.Fprintf(w, nasaViewer.Photos[rand.Intn(len(nasaViewer.Photos))].ImgSrc)
+  //fmt.Fprintf(w, nasaViewer.Photos[rand.Intn(len(nasaViewer.Photos))].ImgSrc)
+  var randArrValue = rand.Intn(len(nasaViewer.Photos))
+  nasaPayload := NasaPayload{ nasaViewer.Photos[randArrValue].ImgSrc }
+  js, err := json.Marshal(nasaPayload)
+  if err != nil {
+    http.Error(w, err.Error(), http.StatusInternalServerError)
+    return
+  }
+
+  w.Header().Set("Content-Type", "application/json")
+  w.WriteHeader(http.StatusOK)
+  w.Write(js)
 }
 
 func main() {
-   http.HandleFunc("/", handler)
-   log.Fatal(http.ListenAndServe(":9001", nil))
+   http.HandleFunc("/rover", handler)
+   log.Fatal(http.ListenAndServe(":8000", nil))
 }

@@ -2,6 +2,9 @@ version: '3'
 services:
   api:
     build: ./api
-    container_name: rover-api-dc
-    command: go build -o main .
+    expose:
+      - "8000"
   web:
+    build: ./web
+    ports:
+      - "4000:3000"

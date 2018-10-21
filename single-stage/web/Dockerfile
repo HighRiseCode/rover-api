@@ -7,6 +7,6 @@ COPY package.json src/
 
 RUN npm install
 
-COPY . src/
+COPY . .
 
 CMD ["npm", "start"]
