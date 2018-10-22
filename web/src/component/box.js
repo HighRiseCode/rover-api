@@ -7,7 +7,7 @@ class Box extends React.Component{
         <div className="box">
           <img src={this.props.color} alt=""/>
         </div>
-        <button onClick={()=>{this.props.handleClick()}}>Change Color</button>
+        <button onClick={()=>{this.props.handleClick()}}>Get New Image</button>
       </div>
     )
   }
