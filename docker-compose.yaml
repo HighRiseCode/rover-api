@@ -4,9 +4,11 @@ services:
     build:
       context: ./api
       dockerfile: ./ss/Dockerfile
+    image: rover-api-ss
     expose:
       - "8000"
   web:
     build: ./web
+    image: rover-web
     ports:
       - "4000:3000"
