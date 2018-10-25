@@ -3,8 +3,8 @@ services:
   api:
     build:
       context: ./api
-      dockerfile: ./ms/Dockerfile
-    image: rover-api-ms
+      dockerfile: ./ss/Dockerfile
+    image: rover-api-ss
     expose:
       - "8000"
   web:
