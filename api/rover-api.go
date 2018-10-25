@@ -45,7 +45,7 @@ type NasaPayload struct {
 
 func handler(w http.ResponseWriter, r *http.Request) {
   var page = strconv.Itoa(rand.Intn(5))
-  response, _ := http.Get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=" + page + "&api_key=")
+  response, _ := http.Get("https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&page=" + page + "&api_key=734bLamU8Wc2mK2UcjNUFxokwB3DuzcGbWfADpg2")
   catalog, _ := ioutil.ReadAll(response.Body)
 
   var nasaViewer NasaViewer
