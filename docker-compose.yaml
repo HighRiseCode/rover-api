@@ -11,4 +11,4 @@ services:
     build: ./web
     image: rover-web
     ports:
-      - "4001:3000"
+      - "80:3000"
